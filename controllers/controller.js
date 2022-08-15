@@ -30,9 +30,32 @@ const newProduct = async (req, res) => {
   const result = await service.newProduct(name);
   return res.status(201).json({ id: result.insertId, name });
 };
+const getAllSales = async (req, res) => {
+  const sale = await service.getAllSales();
+  return res.status(200).json(sale);
+};
+
+const newSale = async (req, res) => {
+  const IdSale = await service.getSaleId();
+  const newId = IdSale[IdSale.length - 1].sale_id + 1;
+  const arrayBody = req.body;
+  arrayBody.forEach(async (item) => {
+    await service.newSale(item.productId, item.quantity);
+  });
+  const result = {
+    id: newId,
+    itemsSold: 
+      arrayBody.map((item) => ({
+          productId: item.productId,
+        quantity: item.quantity })),
+  };
+  return res.status(201).json(result);
+};
 module.exports = {
   getAll,
   getById,
   isNewProductValid,
   newProduct,
+  getAllSales,
+  newSale,
 };

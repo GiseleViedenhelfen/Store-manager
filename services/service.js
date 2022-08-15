@@ -1,5 +1,5 @@
 const model = require('../models/model');
-
+// produtos
 const getAll = async () => { 
   const product = await model.getAll();
   return product;
@@ -12,8 +12,25 @@ const newProduct = async (name) => {
   const product = await model.newProduct(name);
   return product;
 };
+// vendas
+const getSaleId = async () => {
+  const sale = await model.getSaleId();
+  return sale;
+};
+
+const getAllSales = async () => {
+  const sale = await model.getAllSales();
+  return sale;
+};
+const newSale = async (productId, quantity) => {
+  const sale = await model.newProduct(productId, quantity);
+  return sale;
+};
 module.exports = {
   getAll,
   getById,
   newProduct,
+  getAllSales,
+  newSale,
+  getSaleId,
 };
