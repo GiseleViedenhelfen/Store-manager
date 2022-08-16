@@ -102,6 +102,16 @@ const deleteProduct = async (req, res) => {
   await service.deleteProduct(id);
   return res.status(204).send();
 };
+const deleteSale = async (req, res) => {
+  const getSale = await service.getAllSales();
+  const { id } = req.params;
+  const verifyId = getSale.filter((item) => item.id === Number(id));
+   if (verifyId.length === 0) {
+     return res.status(404).json({ message: 'Sale not found' });
+   }
+  await service.deleteSale(id);
+  return res.status(204).send();
+};
 module.exports = {
   getAll,
   getById,
@@ -112,4 +122,5 @@ module.exports = {
   getSaleById,
   editProduct,
   deleteProduct,
+  deleteSale,
 };
