@@ -21,7 +21,7 @@ app.post(
 
 // vendas
 app.get('/sales', controller.getAllSales);
-
+app.get('/sales/:id', controller.getSaleById);
 app.post(
   '/sales',
   productMiddle.notNullProductIdValidation,
