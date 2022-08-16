@@ -73,6 +73,25 @@ const IdSale = await service.getAllSales();
     }));
   return res.status(200).json(result);
 };
+const editProduct = async (req, res) => {
+  const getAllProducts = await service.getAll();
+  const { id } = req.params;
+  const { name } = req.body;
+  const verifyId = getAllProducts.filter((item) => item.id === Number(id));
+   if (!name) {
+     return res.status(400).json({ message: '"name" is required' });
+   }
+  if (name.length < 5) {
+    return res
+      .status(422)
+      .json({ message: '"name" length must be at least 5 characters long' });
+  }
+  if (verifyId.length === 0) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+ await service.editProduct(name, id);
+  return res.status(200).json({ id, name });
+};
 module.exports = {
   getAll,
   getById,
@@ -81,4 +100,5 @@ module.exports = {
   getAllSales,
   newSale,
   getSaleById,
+  editProduct,
 };
