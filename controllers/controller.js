@@ -92,6 +92,16 @@ const editProduct = async (req, res) => {
  await service.editProduct(name, id);
   return res.status(200).json({ id, name });
 };
+const deleteProduct = async (req, res) => {
+  const getAllProducts = await service.getAll();
+  const { id } = req.params;
+  const verifyId = getAllProducts.filter((item) => item.id === Number(id));
+   if (verifyId.length === 0) {
+     return res.status(404).json({ message: 'Product not found' });
+   }
+  await service.deleteProduct(id);
+  return res.status(204).send();
+};
 module.exports = {
   getAll,
   getById,
@@ -101,4 +111,5 @@ module.exports = {
   newSale,
   getSaleById,
   editProduct,
+  deleteProduct,
 };

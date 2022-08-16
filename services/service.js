@@ -38,6 +38,10 @@ const editProduct = async (name, id) => {
   const result = await model.editProduct(name, id);
   return result;
 };
+const deleteProduct = async (id) => {
+  const result = await model.deleteProduct(id);
+  return result;
+};
 module.exports = {
   getAll,
   getById,
@@ -48,4 +52,5 @@ module.exports = {
   getSaleProduct,
   getSaleById,
   editProduct,
+  deleteProduct,
 };
