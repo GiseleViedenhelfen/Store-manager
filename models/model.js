@@ -20,12 +20,14 @@ const newProduct = async (name) => {
 };
 // vendas
 const getAllSales = async () => {
-  const query = 'SELECT * FROM StoreManager.sales;';
-  const [sale] = await connection.query(query);
+  const [sale] = await connection.execute('SELECT * FROM StoreManager.sales;');
   return sale;
 };
 const getSaleProduct = async () => {
-const query = 'SELECT * FROM StoreManager.sales_products;';
+  const query = `select SP.product_id, SP.sale_id, SP.quantity,
+S.date from StoreManager.sales_products as SP
+inner join StoreManager.sales as S
+where SP.sale_id = S.id;`;
 const [sale] = await connection.query(query);
 return sale;
 };

@@ -30,13 +30,11 @@ const newProduct = async (req, res) => {
   const result = await service.newProduct(name);
   return res.status(201).json({ id: result.insertId, name });
 };
-const getAllSales = async (req, res) => {
-  const sale = await service.getAllSales();
+const getAllSales = async (_req, res) => {
   const getDetailsById = await service.getSaleProduct();
-  const getId = sale.map((id) => id);
   const result = getDetailsById.map((item) => ({
       saleId: item.sale_id,
-      date: (getId.filter((i) => i.id === item.sale_id))[0].date,
+      date: item.date,
       productId: item.product_id,
       quantity: item.quantity,
   }));
@@ -61,7 +59,7 @@ const newSale = async (req, res) => {
 };
 const getSaleById = async (req, res) => {
   const { id } = req.params;
-const IdSale = await service.getAllSales();
+  const IdSale = await service.getAllSales();
   const [sale] = await service.getSaleById(id);
   if (sale === undefined || sale.length === 0) {
     return res.status(404).json({ message: 'Sale not found' });
